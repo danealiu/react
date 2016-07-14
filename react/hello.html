@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+    <style>
+        .testClass{color: red;}
+    </style>
+</head>
+<body>
+<div id="container">
+
+</div>
+</body>
+<script src="react.js"></script>
+<script src="react-dom.js"></script>
+<script src="//cdn.bootcss.com/react/0.14.0-beta3/JSXTransformer.js"></script>
+<script type="text/jsx">
+    //一个{}表示在执行js表达式，内联样式要用对象的形式，驼峰形式；class为避免冲突要用className
+    var Hello = React.createClass({
+        render: function() {
+            return <div className="testClass" style={{fontSize:20+'px'}}>Hello {this.props.name}</div>;
+        }
+    });
+    var TestClick = React.createClass({
+        showSpan : function(event){
+            event.stopPropagation();
+            event.preventDefault();
+            var span1 = this.refs.s1;
+            if(span1.style.display ==="none"){
+                span1.style.display="inline";
+            }else{
+                span1.style.display="none";
+            }
+
+        },
+        render : function(){
+            return (
+                    <div>
+                        <button onClick={this.showSpan}>显示|隐藏</button>  <span ref="s1" style={ {"display":"inline"} }>你看见我了吗</span>
+                    </div>
+            );
+        }
+    });
+    var TestInput = React.createClass({
+        getInitialState:function () {
+            return {
+                inputvalue: ""
+            }
+        },
+        changeSpan:function(event){
+            event.stopPropagation();
+            event.preventDefault();
+            this.setState({
+                inputvalue: event.target.value
+            });
+        },
+       render:function() {
+           return (
+                   <div>
+                       <input type="text" onChange={ this.changeSpan }/> <span>{this.state.inputvalue}</span>
+                   </div>
+           )
+       }
+    });
+    ReactDOM.render(
+            <div>
+                <Hello name="World" />
+                <TestClick/><br/>
+                <TestInput/>
+            </div>
+            ,
+            document.getElementById('container')
+    );
+
+
+
+
+</script>
+</html>

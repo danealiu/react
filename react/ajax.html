@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://code.jquery.com/jquery-2.2.2.min.js"></script>
+    <script src="react.js"></script>
+    <script src="react-dom.js"></script>
+    <!--<script src="browser.min.js"></script>-->
+    <script src="//cdn.bootcss.com/react/0.14.0-beta3/JSXTransformer.js"></script>
+</head>
+<body>
+<div id="contain"></div>
+<script type="text/jsx">
+    //
+    var url = "http://www.7gz.com/chief/getListApi?label=&hometown=&have_case=0&have_comment=0&deal=&ranks=&name=&p=1&page=p&sj=0.840345217824801";
+    var Gz = React.createClass({
+        getInitialState:function(){
+          return {
+              name:"帅哥",
+              url:"http://bjcache.leju.com/gongzhang/Chief/28/9d/c6a27ed21bc79897629a25be4dce_thumb_120x160.jpg"
+          }
+        },
+        componentDidMount:function(){
+            $.get(this.props.source,function(data){
+                console.dir(this);
+                var arr = data.chieflist[0];
+                if(this.isMounted()){
+                   this.setState({
+                      name:arr.name,
+                       url:arr.url
+                   });
+                }
+            });
+        },
+        render:function(){
+            return (
+                    <ol>
+                        <li>
+                            <p>{this.state.name}</p>
+                            <img src={this.state.url} />
+                        </li>
+
+                    </ol>
+            )
+        }
+    });
+    ReactDOM.render(<Gz source={url}/>,document.getElementById("contain"));
+</script>
+
+</body>
+</html>
